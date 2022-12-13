@@ -3,7 +3,8 @@
         <div class="col-md-8 offset-md-1">
             <div class="card" style="padding: 30px">
                 <div class="card-body">
-                    <form action="{{ route('posts.update', ['post' => $post->id]) }}" method="POST">
+                    <form action="{{ route('posts.update', ['post' => $post->id]) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
@@ -31,6 +32,18 @@
                             @error('content')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="text" class="form-label">Featured Image</label>
+                            <input class="form-control @error('featured_image') is-invalid @enderror"
+                                name="featured_image" id="formFileSm" type="file" style="line-height: 1;">
+                            @error('featured_image')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror <br>
+                            <img src="{{ url('/media/' . $post->featured_image) }}" alt="post-title" width="200px"
+                                height="100px" />
+
                         </div>
 
                         <div class="mb-3">

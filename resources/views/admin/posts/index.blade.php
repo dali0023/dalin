@@ -49,12 +49,12 @@
                                         @endif
                                             {{-- {{ $post->is_published }} --}}
                                     </td>
-                                    <td> date </td>
+                                    <td> {{ date('d M, Y', strtotime($post->created_at)) }} </td>
                                     <td>
                                         <!-- Call to action buttons -->
                                         <ul class="list-inline m-0">
                                             <li class="list-inline-item">
-                                                <a href="{{ route('home.show', $post->id) }}" target="_blank"
+                                                <a href="{{ route('user.posts.show', $post->slug) }}" target="_blank"
                                                     class="btn btn-info btn-sm rounded-0" type="button"
                                                     data-toggle="tooltip" data-placement="top" title="Show"><i
                                                         class="fa fa-eye"></i></a>

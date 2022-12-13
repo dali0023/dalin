@@ -33,7 +33,7 @@ class CategoryController extends Controller
         $category->save();
 
         session()->flash('status', 'category was added successfully!');
-        return redirect('/categories');
+        return redirect('/admin/categories');
     }
 
     public function edit($id)
@@ -53,7 +53,7 @@ class CategoryController extends Controller
         $category->save();
 
         session()->flash('status', 'category was updated successfully!');
-        return redirect('/categories');
+        return redirect('/admin/categories');
     }
 
     public function destroy($id)
@@ -61,7 +61,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
         session()->flash('status', 'Category Deleted Successfully!');
-        return Redirect::route('categories.index');
+        return redirect('/admin/categories');
     }
 
 }

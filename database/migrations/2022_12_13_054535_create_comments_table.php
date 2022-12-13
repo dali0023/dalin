@@ -15,26 +15,17 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->unsignedBigInteger('post_id')->index();
-            $table->foreign('post_id')->references('id')->on('posts')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->bigInteger('parent_comment_id')->nullable();
-            $table->string('title', 120);
-            $table->string('slug', 120);
+            $table->unsignedBigInteger('parent_comment_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('guest_user_name')->nullable();
+            $table->string('guest_user_email')->nullable();
+            $table->morphs('commentable');
             $table->longText('content');
             $table->boolean('is_published')->default('1');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('comments');

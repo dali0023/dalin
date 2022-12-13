@@ -12,17 +12,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    // relation between user and post (one to many)
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
-    // relation between  post and comments (one to many)
-    public function comments() 
-    {
-        return $this->hasMany(Comment::class);
-    }
 
     // relation between  category and post(one to many)
     public function categories()
@@ -35,6 +25,15 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
-
-
+    
+    // relation between user and post (one to many)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+   // relation between  post and comments (one to many or one to many polymor)
+   public function comments()
+   {
+       return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_comment_id');
+   }
 }

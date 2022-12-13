@@ -1,81 +1,9 @@
-<x-app-layout>
-
-    <div class="col-lg-8">
-        <!-- post single -->
-        <div class="post post-single">
-            <!-- post header -->
-            <div class="post-header">
-                <h1 class="title mt-0 mb-3"> {{ $post->title }}</h1>
-                <ul class="meta list-inline mb-0">
-                    <li class="list-inline-item"><a href="#"><img
-                                src="{{ asset('/front/images/other/author-sm.png') }}" class="author"
-                                alt="author" />{{ $post->user->name }} </a></li>
-                    @foreach ($post->categories as $category)
-                        <li class="list-inline-item"><a href="#">{{ $category->title }}</a></li>
-                    @endforeach
-                    <li class="list-inline-item">{{ date('d F Y', strtotime($post->created_at)) }}</li>
-                </ul>
-            </div>
-            <!-- featured image -->
-            <div class="featured-image">
-                <img src="{{ asset('/media/' . $post->featured_image) }}" alt="post-title" />
-            </div>
-            <!-- post content -->
-            <div class="post-content clearfix">
-
-                {!! $post->content !!}
-
-
-            </div>
-            <!-- post bottom section -->
-            <div class="post-bottom">
-                <div class="row d-flex align-items-center">
-                    <div class="col-md-12 col-12 text-center text-md-start">
-                        <!-- tags -->
-                        @foreach ($post->tags as $tag)
-                            <a href="{{ route('user.tags.show', $tag->id) }}" class="tag">#{{ $tag->title }}</a>
-                        @endforeach
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
-        <div class="spacer" data-height="50"></div>
-
-        <div class="about-author padding-30 rounded">
-            <div class="thumb">
-                <img src="{{ asset('/front/images/other/avatar-about.png') }}" alt="Katen Doe" />
-            </div>
-            <div class="details">
-                <h4 class="name"><a href="#">{{ $post->user->name }}</a></h4>
-                <p>Hello, I’m a content writer who is fascinated by content fashion, celebrity and lifestyle. She
-                    helps clients bring the right content to the right people.</p>
-                <!-- social icons -->
-                <ul class="social-icons list-unstyled list-inline mb-0">
-                    <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                    <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                    <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
-                    <li class="list-inline-item"><a href="#"><i class="fab fa-youtube"></i></a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="spacer" data-height="50"></div>
-
-        <!-- section header -->
-        <div class="section-header">
-            <h3 class="section-title">Comments ({{ $post->comments->count() }})</h3>
-            <img src="{{ asset('/front/images/wave.svg') }}" class="wave" alt="wave" />
-        </div>
-
         <!-- post comments -->
         <div class="comments bordered padding-30 rounded">
 
             <ul class="comments">
 
-                @foreach ($post->comments as $comment)
+                @foreach (comments as $comment)
                     <!-- comment item -->
                     <li class="comment rounded">
                         <div class="thumb">
@@ -89,7 +17,7 @@
                             @endif
 
 
-                            <span class="date">{{ date('M d, Y h:i A', strtotime($comment->created_at)) }}</span>
+                            <span class="date">{{ date('M d, Y h:i A', strtotime($post->created_at)) }}</span>
                             <p>{{ $comment->content }}</p>
                             @if ($comment->user_id === Auth::id())
                                 <span><a href="#" class="btn btn-default btn-sm">delete</a></span>
@@ -161,7 +89,7 @@
                                 @endif
                                 
                                 </a></h4>
-                                <span class="date">{{ date('M d, Y h:i A', strtotime($reply->created_at)) }}</span>
+                                <span class="date">{{ date('M d, Y h:i A', strtotime($post->created_at)) }}</span>
                                 <p>{{ $reply->content }}</p>
                                 <span><a class="btn btn-default btn-sm" data-bs-toggle="collapse"
                                         href="#a{{ $comment->id }}" role="button" aria-expanded="false"
@@ -220,12 +148,3 @@
                 <button type="submit" class="btn btn-default">Add Comment</button>
             </form>
         </div>
-
-
-
-
-    </div>
-    <div class="col-lg-4">
-        @include('layouts.front-includes-files.sidebar', [$tags, $categories])
-    </div>
-</x-app-layout>

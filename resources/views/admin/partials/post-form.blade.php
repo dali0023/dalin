@@ -14,8 +14,12 @@
         <div class="text-danger">{{ $message }}</div>
     @enderror
 </div>
+<div class="mb-3">
+    <label for="text" class="form-label">Featured Image</label>
+    <input class="form-control @error('featured_image') is-invalid @enderror" name="featured_image" id="formFileSm" type="file" style="line-height: 1;">
+</div>
 
-{{-- <input type="hidden" name="user_id" value="author_id"> --}}
+
 
 <div class="mb-3">
     <label for="content" class="form-label">Content</label>

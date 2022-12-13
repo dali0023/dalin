@@ -1,28 +1,32 @@
 <x-app-layout>
-    	<!-- featured post large -->
-        <div class="post featured-post-lg">
-            <div class="details clearfix">
-                <a href="category.html" class="category-badge">Inspiration</a>
-                <h2 class="post-title"><a href="blog-single.html">5 Easy Ways You Can Turn Future Into Success</a></h2>
-                <ul class="meta list-inline mb-0">
-                    <li class="list-inline-item"><a href="#">Katen Doe</a></li>
-                    <li class="list-inline-item">29 March 2021</li>
-                </ul>
-            </div>
-            <a href="blog-single.html">
-                <div class="thumb rounded">
-                    <div class="inner data-bg-image" data-bg-image="{{ asset('/front/images/posts/featured-lg.jpg') }}"></div>
-                </div>
-            </a>
+    <div class="col-lg-8">
+         <!-- featured post large -->
+    <div class="post featured-post-lg">
+        <div class="details clearfix">
+            <a href="category.html" class="category-badge">Inspiration</a>
+            <h2 class="post-title"><a href="blog-single.html">5 Easy Ways You Can Turn Future Into Success</a></h2>
+            <ul class="meta list-inline mb-0">
+                <li class="list-inline-item"><a href="#">Katen Doe</a></li>
+                <li class="list-inline-item">29 March 2021</li>
+            </ul>
         </div>
-        <br>
-        <br>
-        <br>
+        <a href="blog-single.html">
+            <div class="thumb rounded">
+                <div class="inner data-bg-image" data-bg-image="{{ asset('/front/images/posts/featured-lg.jpg') }}">
+                </div>
+            </div>
+        </a>
+    </div>
+    <br>
+    <br>
+    <br>
     <!-- section header -->
     @include('front.partials.home.editors_pick')
 
     <!-- section header -->
     @include('front.partials.home.trending')
+
+
 
     <!-- section header -->
     <div class="section-header">
@@ -137,7 +141,8 @@
                             <div class="social-share me-auto">
                                 <button class="toggle-button icon-share"></button>
                                 <ul class="icons list-unstyled list-inline mb-0">
-                                    <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <li class="list-inline-item"><a href="#"><i
+                                                class="fab fa-facebook-f"></i></a>
                                     </li>
                                     <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a>
                                     </li>
@@ -314,4 +319,13 @@
 
     </div>
 
+    </div>
+    <div class="col-lg-4">
+        @include('layouts.front-includes-files.sidebar', [$tags, $categories])
+
+    </div>
+
+
+
+   
 </x-app-layout>

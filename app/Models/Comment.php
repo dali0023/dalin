@@ -12,15 +12,15 @@ class Comment extends Model
     use HasFactory;
     
     // one to many relation between user and comment
+
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
-
     // one to many relation between post and comment
 
-    public function post()
+    public function replies()
     {
-        $this->belongsTo(Post::class);
+        return $this->hasMany(Comment::class, 'parent_comment_id');
     }
 }

@@ -1,44 +1,84 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+    <title>Katen - Minimal Blog & Magazine HTML Theme</title>
+    <meta name="description" content="Katen - Minimal Blog & Magazine HTML Theme">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/front/images/favicon.png') }}">
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+    <!-- STYLES -->
+    <link rel="stylesheet" href="{{ asset('/front/css/bootstrap.min.css') }}" type="text/css" media="all">
+    <link rel="stylesheet" href="{{ asset('/front/css/all.min.css') }}" type="text/css" media="all">
+    <link rel="stylesheet" href="{{ asset('/front/css/slick.css') }}" type="text/css" media="all">
+    <link rel="stylesheet" href="{{ asset('/front/css/simple-line-icons.css') }}" type="text/css" media="all">
+    <link rel="stylesheet" href="{{ asset('/front/css/style.css') }}" type="text/css" media="all">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
 
-        <!-- Styles -->
-        @livewireStyles
-    </head>
-    <body class="font-sans antialiased">
-        <x-jet-banner />
+<body class="font-sans antialiased">
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+    <!-- site wrapper -->
+    <div class="site-wrapper">
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+        <div class="main-overlay"></div>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+        <!-- header -->
+        @include('layouts.front-includes-files.header')
 
-        @stack('modals')
+        <!-- section main content -->
+        <section class="main-content">
+            <div class="container-xl">
 
-        @livewireScripts
-    </body>
+                <div class="row gy-4">
+
+                   {{ $slot }}
+
+                </div>
+
+            </div>
+        </section>
+       
+        <!-- instagram feed -->
+        @include('layouts.front-includes-files.instagram_feed')
+
+        <!-- footer -->
+        @include('layouts.front-includes-files.footer')
+
+
+    </div><!-- end site wrapper -->
+
+    <!-- search popup area -->
+    <div class="search-popup">
+        <!-- close button -->
+        <button type="button" class="btn-close" aria-label="Close"></button>
+        <!-- content -->
+
+        @include('layouts.front-includes-files.search_popup_area')
+
+    </div>
+
+    <!-- canvas menu -->
+    <div class="canvas-menu d-flex align-items-end flex-column">
+        <!-- close button -->
+        <button type="button" class="btn-close" aria-label="Close"></button>
+
+        @include('layouts.front-includes-files.canvas_menu')
+    </div>
+
+
+
+    <!-- JAVA SCRIPTS -->
+    <script src="{{ asset('/front/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('/front/js/popper.min.js') }}"></script>
+    <script src="{{ asset('/front/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/front/js/slick.min.js') }}"></script>
+    <script src="{{ asset('/front/js/jquery.sticky-sidebar.min.js') }}"></script>
+    <script src="{{ asset('/front/js/custom.js') }}"></script>
+
+</body>
+
 </html>

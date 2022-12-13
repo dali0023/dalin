@@ -32,7 +32,7 @@ class TagController extends Controller
         $tag->save();
 
         session()->flash('status', 'Tag was added successfully!');
-        return redirect('/tags');
+        return Redirect::route('tags.index');
     }
 
     public function edit($id)
@@ -52,7 +52,7 @@ class TagController extends Controller
         $tag->save();
 
         session()->flash('status', 'Tag was updated successfully!');
-        return redirect('/tags');
+        return Redirect::route('tags.index');
     }
 
     public function destroy($id)
