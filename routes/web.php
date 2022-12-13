@@ -54,7 +54,7 @@ Route::post('/upload', [CkeditorController::class, 'uploadimage'])->name('ckedit
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/posts/{slug}', [HomeController::class, 'show'])->name('user.posts.show');
-Route::get('/categories/{id}', [UserCategoryController::class, 'show'])->name('user.categories.show');
+Route::get('/categories/{slug}', [UserCategoryController::class, 'show'])->name('user.categories.show');
 Route::get('/tags/{id}', [UserTagController::class, 'show'])->name('user.tags.show');
 
 Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.store');

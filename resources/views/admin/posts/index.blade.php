@@ -32,9 +32,7 @@
                                     <td>{{ $post->user->name }}</td>
 
                                     <td>
-                                        @foreach ($post->categories as $category)
-                                            <span class="badge badge-primary">{{ $category->title }}</span>
-                                        @endforeach
+                                        <span class="badge badge-primary">{{ $post->categories->title }}</span>
                                     </td>
                                     <td>
                                         @foreach ($post->tags as $tag)

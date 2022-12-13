@@ -13,11 +13,11 @@ class Post extends Model
     use HasFactory;
 
 
-
+    
     // relation between  category and post(one to many)
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     // many to many relationship between tags and posts

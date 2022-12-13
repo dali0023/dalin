@@ -73,7 +73,7 @@
         <div class="widget-content">
             <ul class="list">
                 @foreach ($categories as $category)
-                    <li><a href="{{ route('user.categories.show', $category->slug) }}">{{ $category->title }}</a><span>(2)</span></li>
+                    <li><a href="{{ route('user.categories.show', $category->slug) }}">{{ $category->title }}</a><span>({{ $category->post->count() }})</span></li>
                 @endforeach
             </ul>
         </div>
@@ -188,14 +188,8 @@
         </div>
         <div class="widget-content">
             @foreach ($tags as $tag)
-            {{-- <a href="{{ route('tags.show', $tag->id)}}" class="tag">#{{ $tag->title }}</a> --}}
-            <a href="{{ route('user.tags.show', $tag->slug) }}" class="tag">#{{ $tag->title }}</a>
+            <a href="{{ route('user.tags.show', $tag->slug) }}" class="tag">#{{ $tag->title }} <span class="badge bg-danger">4</span></a>
         @endforeach
-            {{-- <a href="#" class="tag">#Trending</a>
-            <a href="#" class="tag">#Video</a>
-            <a href="#" class="tag">#Featured</a>
-            <a href="#" class="tag">#Gallery</a>
-            <a href="#" class="tag">#Celebrities</a> --}}
         </div>
     </div>
 

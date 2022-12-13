@@ -10,9 +10,9 @@
                     <li class="list-inline-item"><a href="#"><img
                                 src="{{ asset('/front/images/other/author-sm.png') }}" class="author"
                                 alt="author" />{{ $post->user->name }} </a></li>
-                    @foreach ($post->categories as $category)
-                        <li class="list-inline-item"><a href="#">{{ $category->title }}</a></li>
-                    @endforeach
+                    
+                        <li class="list-inline-item"><a href="#">{{ $post->categories->title }}</a></li>
+                    
                     <li class="list-inline-item">{{ date('d F Y', strtotime($post->created_at)) }}</li>
                 </ul>
             </div>
@@ -36,7 +36,6 @@
                             <a href="{{ route('user.tags.show', $tag->id) }}" class="tag">#{{ $tag->title }}</a>
                         @endforeach
                     </div>
-
                 </div>
             </div>
 

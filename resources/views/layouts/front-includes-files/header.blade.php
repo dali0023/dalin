@@ -2,13 +2,13 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-xl">
             <!-- site logo -->
-            <a class="navbar-brand" href="index.html"><img src="{{ asset('/front/images/logo.svg') }}" alt="logo" /></a>
+            <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('/front/images/logo.svg') }}" alt="logo" /></a>
 
             <div class="collapse navbar-collapse">
                 <!-- menus -->
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="{{ url('/') }}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Lifestyle</a>

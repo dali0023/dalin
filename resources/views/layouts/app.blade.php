@@ -28,22 +28,20 @@
 
         <!-- header -->
         @include('layouts.front-includes-files.header')
-
+        @yield('category_header')
+        {{-- {{ $category_header }} --}}
         <!-- section main content -->
         <section class="main-content">
             <div class="container-xl">
-
                 <div class="row gy-4">
-
-                   {{ $slot }}
-
+                    {{ $slot }}
                 </div>
-
+                
             </div>
         </section>
-       
+
         <!-- instagram feed -->
-        @include('layouts.front-includes-files.instagram_feed')
+        {{-- @include('layouts.front-includes-files.instagram_feed') --}}
 
         <!-- footer -->
         @include('layouts.front-includes-files.footer')

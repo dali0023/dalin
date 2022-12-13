@@ -59,7 +59,7 @@
                         </div>
                         <div class="mb-3">
                             <label>Categories</label>
-                            <select class="select2bs4" name="category[]" multiple="multiple"
+                            <select class="select2bs4" name="category"
                                 data-placeholder="Select a Category" style="width: 100%;">
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}"

@@ -17,8 +17,7 @@ class PostController extends Controller
     {
         $posts = Post::all();
         $tags = Tag::all();
-        $categories = Category::all();
-        return view('admin.posts.index', compact('posts', 'tags', 'categories'));
+        return view('admin.posts.index', compact('posts', 'tags'));
     }
 
     public function create()
@@ -43,6 +42,7 @@ class PostController extends Controller
         $posts->meta_title = $request->meta_title;
         $posts->slug = Str::slug($request->input('title'), "-");
         $posts->content = $request->content;
+        $posts->category_id = $request->category;
         $posts->is_published = 0;
 
         // $input = $request->all();
@@ -57,7 +57,6 @@ class PostController extends Controller
         $posts->save();
 
         $posts->tags()->attach($request->input('tag')); // save data to category_post pivot table
-        $posts->categories()->attach($request->input('category')); // save data to post_tag pivot table
 
         session()->flash('status', 'post was added successfully!');
         return Redirect::route('posts.index');
@@ -91,6 +90,7 @@ class PostController extends Controller
         $posts->meta_title = $request->meta_title;
         $posts->slug = Str::slug($request->input('title'), "-");
         $posts->content = $request->content;
+        $posts->category_id = $request->category;
         $posts->is_published = 0;
 
         if (request()->hasFile('featured_image') && request('featured_image') != '') {
@@ -108,7 +108,6 @@ class PostController extends Controller
         $posts->save();
 
         $posts->tags()->sync($request->input('tags')); // save data to category_post pivot table
-        $posts->categories()->sync($request->input('category')); // save data to post_tag pivot table
 
         session()->flash('status', 'post was updated successfully!');
         return Redirect::route('posts.index');
