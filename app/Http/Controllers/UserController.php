@@ -38,9 +38,9 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         $user->syncPermissions($request->permission, []);
-
         session()->flash('status', 'User was added successfully!');
-        return redirect('/users');
+        // return redirect('/users');
+        return redirect('/');
     }
 
     public function edit($id)

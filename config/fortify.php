@@ -66,13 +66,13 @@ return [
     'home' => function(){
         //if you want to go to a specific route
         // return route('dashboard');
-      
+
         //or if you have a bunch of redirection options
-        if (Auth::user()->hasRole('admin')) {
+        if (Auth::user()->hasRole('admin|writer')) {
            return route('admin.index');
         }
         else{
-           return route('dashboard');
+           return route('/');
         }
     },
     /*

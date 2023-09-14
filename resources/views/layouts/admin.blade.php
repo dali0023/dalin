@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Starter</title>
+    <title>Dalin</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -25,9 +25,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
-
-
-
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 220px;
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -103,7 +105,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         ClassicEditor
             .create(document.querySelector('#editor'), {
                 ckfinder: {
-                    uploadUrl:'{{route('ckeditor.upload').'?_token='.csrf_token()}}'
+                    uploadUrl: '{{ route('ckeditor.upload') . '?_token=' . csrf_token() }}'
                 }
             })
             .then(editor => {

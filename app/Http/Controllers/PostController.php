@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Mews\Purifier\Facades\Purifier;
 
 class PostController extends Controller
 {
@@ -38,10 +39,10 @@ class PostController extends Controller
         // dd($request->featured_image);
         $posts = new Post();
         $posts->user_id = Auth::id();
-        $posts->title = $request->title;
-        $posts->meta_title = $request->meta_title;
-        $posts->slug = Str::slug($request->input('title'), "-");
-        $posts->content = $request->content;
+        $posts->title = Purifier::clean($request->title);
+        $posts->meta_title = Purifier::clean($request->meta_title);
+        $posts->slug = Str::slug(Purifier::clean($request->input('title')), "-");
+        $posts->content = Purifier::clean($request->content);
         $posts->category_id = $request->category;
         $posts->is_published = 0;
 
@@ -62,12 +63,6 @@ class PostController extends Controller
         return Redirect::route('posts.index');
     }
 
-    // public function show($id)
-    // {
-    //     $post = Post::find($id); // it will auto retrive all related table's data
-    //     return view('admin.posts.show', compact('post'));
-    // }
-
     public function edit($id)
     {
         $post = Post::find($id);
@@ -86,10 +81,10 @@ class PostController extends Controller
 
         $posts = Post::find($id);
         $posts->user_id = Auth::id();
-        $posts->title = $request->title;
-        $posts->meta_title = $request->meta_title;
-        $posts->slug = Str::slug($request->input('title'), "-");
-        $posts->content = $request->content;
+        $posts->title = Purifier::clean($request->title);
+        $posts->meta_title = Purifier::clean($request->meta_title);
+        $posts->slug = Str::slug(Purifier::clean($request->input('title')), "-");
+        $posts->content = Purifier::clean($request->content);
         $posts->category_id = $request->category;
         $posts->is_published = 0;
 
@@ -120,13 +115,14 @@ class PostController extends Controller
             $imagePath = str_replace("\\", "/", public_path('media/' . $post->featured_image));
             if (File::exists($imagePath)) {
                 File::delete($imagePath);
+
             }
         }
-        $post->tags()->detach(); // remove post related tags
-        $post->categories()->detach(); // remove post related categories
+        $post->tags()->detach();
         $post->delete(); // delete post
 
         session()->flash('status', 'post was deleted successfully!');
         return Redirect::route('posts.index');
     }
+
 }

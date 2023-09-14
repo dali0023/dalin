@@ -11,7 +11,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table class="table">
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr class="text-center">
                                 <th scope="col">#</th>
@@ -41,9 +41,9 @@
                                     </td>
                                     <td>
                                         @if ($post->is_published === 0)
-                                            <a href="#" class="btn btn-primary btn-small">Publish</a>
+                                            <a href="{{ route('admin.post-status.update', $post->id ) }}" class="btn btn-primary btn-small">Publish</a>
                                         @else
-                                        <a href="#" class="btn btn-small btn-primary">UnPublish</a>
+                                        <a href="{{ route('admin.post-status.update', $post->id ) }}" class="btn btn-small btn-primary">UnPublish</a>
                                         @endif
                                             {{-- {{ $post->is_published }} --}}
                                     </td>

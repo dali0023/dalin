@@ -6,6 +6,7 @@ use App\Models\Tag;
 use Illuminate\Support\Str;
 use App\Http\Requests\StoreTag;
 use App\Http\Requests\UpdateTag;
+use Mews\Purifier\Facades\Purifier;
 use Illuminate\Support\Facades\Redirect;
 
 class TagController extends Controller
@@ -23,12 +24,13 @@ class TagController extends Controller
 
     public function store(StoreTag $request)
     {
+
         $validated = $request->validated();
         $tag = new Tag();
-        $tag->title = $validated['title'];
-        $tag->content = $validated['content'];
-        $tag->meta_title = $validated['meta_title'];
-        $tag->slug = Str::slug($request->input('title'), "-");
+        $tag->title = Purifier::clean($validated['title']);
+        $tag->content = Purifier::clean($validated['content']);
+        $tag->meta_title = Purifier::clean($validated['meta_title']);
+        $tag->slug = Str::slug(Purifier::clean($request->input('title')), "-");
         $tag->save();
 
         session()->flash('status', 'Tag was added successfully!');
@@ -45,10 +47,10 @@ class TagController extends Controller
     {
         $validated = $request->validated();
         $tag = Tag::findOrFail($id);
-        $tag->title = $validated['title'];
-        $tag->content = $validated['content'];
-        $tag->meta_title = $validated['meta_title'];
-        $tag->slug = Str::slug($request->input('title'), "-");
+        $tag->title = Purifier::clean($validated['title']);
+        $tag->content = Purifier::clean($validated['content']);
+        $tag->meta_title = Purifier::clean($validated['meta_title']);
+        $tag->slug = Str::slug(Purifier::clean($request->input('title')), "-");
         $tag->save();
 
         session()->flash('status', 'Tag was updated successfully!');

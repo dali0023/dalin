@@ -1,18 +1,22 @@
 <x-app-layout>
-
+    @section('title')
+        {{ $post->title }}
+    @endsection
     <div class="col-lg-8">
         <!-- post single -->
         <div class="post post-single">
             <!-- post header -->
             <div class="post-header">
-                <h1 class="title mt-0 mb-3"> {{ $post->title }}</h1>
+                <h1 class="title mt-0 mb-3"> {{ strip_tags($post->title) }}</h1>
                 <ul class="meta list-inline mb-0">
                     <li class="list-inline-item"><a href="#"><img
                                 src="{{ asset('/front/images/other/author-sm.png') }}" class="author"
                                 alt="author" />{{ $post->user->name }} </a></li>
-                    
-                        <li class="list-inline-item"><a href="#">{{ $post->categories->title }}</a></li>
-                    
+
+                    <li class="list-inline-item"><a
+                            href="{{ route('user.categories.show', $post->categories->slug) }}">{{ $post->categories->title }}</a>
+                    </li>
+
                     <li class="list-inline-item">{{ date('d F Y', strtotime($post->created_at)) }}</li>
                 </ul>
             </div>
@@ -23,8 +27,7 @@
             <!-- post content -->
             <div class="post-content clearfix">
 
-                {!! $post->content !!}
-
+                {!! strip_tags(clean($post->content)) !!}
 
             </div>
             <!-- post bottom section -->
@@ -33,7 +36,7 @@
                     <div class="col-md-12 col-12 text-center text-md-start">
                         <!-- tags -->
                         @foreach ($post->tags as $tag)
-                            <a href="{{ route('user.tags.show', $tag->id) }}" class="tag">#{{ $tag->title }}</a>
+                            <a href="{{ route('user.tags.show', $tag->slug) }}" class="tag">#{{ $tag->title }}</a>
                         @endforeach
                     </div>
                 </div>
@@ -45,7 +48,7 @@
 
         <div class="about-author padding-30 rounded">
             <div class="thumb">
-                <img src="{{ asset('/front/images/other/avatar-about.png') }}" alt="Katen Doe" />
+                <img src="{{ asset('/front/images/other/avatar-about.png') }}" alt="Dalin" />
             </div>
             <div class="details">
                 <h4 class="name"><a href="#">{{ $post->user->name }}</a></h4>
@@ -70,112 +73,125 @@
         </div>
 
         <!-- post comments -->
-        <div class="comments bordered padding-30 rounded">
+        @if ($post->comments->count() > 0)
+            <div class="comments bordered padding-30 rounded">
 
-            <ul class="comments">
+                <ul class="comments">
 
-                @foreach ($post->comments as $comment)
-                    <!-- comment item -->
-                    <li class="comment rounded">
-                        <div class="thumb">
-                            <img src="{{ asset('/front/images/other/comment-1.png') }}" alt="" />
-                        </div>
-                        <div class="details">
-                            @if ($comment->user_id)
-                                <h4 class="name">{{ $comment->user->name }}</h4>
-                            @else
-                                <h4 class="name">{{ $comment->guest_user_name }}</h4>
-                            @endif
-
-
-                            <span class="date">{{ date('M d, Y h:i A', strtotime($comment->created_at)) }}</span>
-                            <p>{{ $comment->content }}</p>
-                            @if ($comment->user_id === Auth::id())
-                                <span><a href="#" class="btn btn-default btn-sm">delete</a></span>
-                            @endif
-                            <span><a class="btn btn-default btn-sm" data-bs-toggle="collapse"
-                                    href="#a{{ $comment->id }}" role="button" aria-expanded="false"
-                                    aria-controls="a{{ $comment->id }}">
-                                    reply
-                                </a></span>
-                            <div class="collapse" id="a{{ $comment->id }}">
-                                <div class="card card-body padding-10" style="margin-top: 10px">
-
-                                    <!--Reply Form Start-->
-                                    <form action="{{ route('reply.store') }}" id="comment-form" class="comment-form"
-                                        method="post">
-                                        @csrf
-                                        <input type="hidden" name="post_id" value="{{ $post->id }}" />
-                                        <input type="hidden" name="parent_comment_id" value="{{ $comment->id }}" />
-                                        <div class="messages"></div>
-                                        <div class="row">
-
-                                            <div class="column col-md-12">
-                                                <!-- Comment textarea -->
-                                                <div class="form-group">
-                                                    <textarea name="content" id="InputComment" class="form-control" rows="4" placeholder="Your comment here..."
-                                                        required="required"></textarea>
-                                                </div>
-                                            </div>
-
-                                            @if (!Auth::check())
-                                                <div class="column col-md-6">
-                                                    <!-- Email input -->
-                                                    <div class="form-group">
-                                                        <input type="email" class="form-control" id="InputEmail"
-                                                            name="guest_user_email" placeholder="Email address"
-                                                            required="required">
-                                                    </div>
-                                                </div>
-
-                                                <div class="column col-md-6">
-                                                    <!-- Email input -->
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" id="InputName"
-                                                            name="guest_user_name" placeholder="Your name"
-                                                            required="required">
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <button type="submit" class="btn btn-default">Add Reply</button>
-                                    </form>
-                                    <!--Reply Form End-->
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <!-- Reply Item -->
-                    @foreach ($comment->replies as $reply)
-                        <li class="comment child rounded">
+                    @foreach ($post->comments as $comment)
+                        <!-- comment item -->
+                        <li class="comment rounded">
                             <div class="thumb">
-                                <img src="{{ asset('/front/images/other/comment-2.png') }}" alt="John Doe" />
+                                <img src="{{ asset('/front/images/other/comment-1.png') }}" alt="" />
                             </div>
                             <div class="details">
-                                <h4 class="name"><a href="#">
-                                @if ($reply->user_id)
-                                    <span style="color: red">{{ $reply->user->name }}</span>
+                                @if ($comment->user_id)
+                                    <h4 class="name">{{ $comment->user->name }}</h4>
                                 @else
-                                    <span style="color: red">{{ $reply->guest_user_name }}</span>
+                                    <h4 class="name">{{ $comment->guest_user_name }}</h4>
                                 @endif
-                                
-                                </a></h4>
-                                <span class="date">{{ date('M d, Y h:i A', strtotime($reply->created_at)) }}</span>
-                                <p>{{ $reply->content }}</p>
+
+
+                                <span class="date">{{ date('M d, Y h:i A', strtotime($comment->created_at)) }}</span>
+                                <p>{{ strip_tags($comment->content) }}</p>
+                                {{-- <div style="display: flex"> --}}
+                                {{-- @if ($comment->user_id === Auth::id())
+                                        <span style="margin-right: 10px">
+                                            <form action="{{ route('') }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-default btn-sm" type="submit"
+                                                    title="Delete">Delete</button>
+                                            </form>
+                                        </span>
+                                    @endif --}}
                                 <span><a class="btn btn-default btn-sm" data-bs-toggle="collapse"
                                         href="#a{{ $comment->id }}" role="button" aria-expanded="false"
                                         aria-controls="a{{ $comment->id }}">
                                         reply
                                     </a></span>
+                                {{-- </div> --}}
+
+                                <div class="collapse" id="a{{ $comment->id }}">
+                                    <div class="card card-body padding-10" style="margin-top: 10px">
+
+                                        <!--Reply Form Start-->
+                                        <form action="{{ route('reply.store') }}" id="comment-form"
+                                            class="comment-form" method="post">
+                                            @csrf
+                                            <input type="hidden" name="post_id" value="{{ $post->id }}" />
+                                            <input type="hidden" name="parent_comment_id"
+                                                value="{{ $comment->id }}" />
+                                            <div class="messages"></div>
+                                            <div class="row">
+
+                                                <div class="column col-md-12">
+                                                    <!-- Comment textarea -->
+                                                    <div class="form-group">
+                                                        <textarea name="content" id="InputComment" class="form-control" rows="4" placeholder="Your comment here..."
+                                                            required="required"></textarea>
+                                                    </div>
+                                                </div>
+
+                                                @if (!Auth::check())
+                                                    <div class="column col-md-6">
+                                                        <!-- Email input -->
+                                                        <div class="form-group">
+                                                            <input type="email" class="form-control" id="InputEmail"
+                                                                name="guest_user_email" placeholder="Email address"
+                                                                required="required">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="column col-md-6">
+                                                        <!-- Email input -->
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="InputName"
+                                                                name="guest_user_name" placeholder="Your name"
+                                                                required="required">
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <button type="submit" class="btn btn-default">Add Reply</button>
+                                        </form>
+                                        <!--Reply Form End-->
+                                    </div>
+                                </div>
                             </div>
                         </li>
-                       
-                    @endforeach
-                @endforeach
-            </ul>
-        </div>
+                        <!-- Reply Item -->
+                        @foreach ($comment->replies as $reply)
+                            <li class="comment child rounded">
+                                <div class="thumb">
+                                    <img src="{{ asset('/front/images/other/comment-2.png') }}" alt="John Doe" />
+                                </div>
+                                <div class="details">
+                                    <h4 class="name"><a href="#">
+                                            @if ($reply->user_id)
+                                                <span style="color: red">{{ $reply->user->name }}</span>
+                                            @else
+                                                <span style="color: red">{{ $reply->guest_user_name }}</span>
+                                            @endif
 
-        <div class="spacer" data-height="50"></div>
+                                        </a></h4>
+                                    <span
+                                        class="date">{{ date('M d, Y h:i A', strtotime($reply->created_at)) }}</span>
+                                    <p>{{ strip_tags($reply->content) }}</p>
+                                    <span><a class="btn btn-default btn-sm" data-bs-toggle="collapse"
+                                            href="#a{{ $comment->id }}" role="button" aria-expanded="false"
+                                            aria-controls="a{{ $comment->id }}">
+                                            reply
+                                        </a></span>
+                                </div>
+                            </li>
+                        @endforeach
+                    @endforeach
+                </ul>
+            </div>
+            <div class="spacer" data-height="50"></div>
+        @endif
+
 
         <!-- section header -->
         <div class="section-header">
@@ -219,8 +235,6 @@
                 <button type="submit" class="btn btn-default">Add Comment</button>
             </form>
         </div>
-
-
 
 
     </div>

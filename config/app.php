@@ -197,7 +197,7 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-
+        Mews\Purifier\PurifierServiceProvider::class, 
     ],
 
     /*
@@ -210,9 +210,8 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
      */
-
     'aliases' => Facade::defaultAliases()->merge([
         'Image' => Intervention\Image\Facades\Image::class,
+        'Purifier' => Mews\Purifier\Facades\Purifier::class, 
     ])->toArray(),
-
 ];

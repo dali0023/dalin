@@ -10,9 +10,7 @@
             <div class="post">
                 <div class="thumb rounded">
                     <a href="category.html" class="category-badge position-absolute">Culture</a>
-                    <span class="post-format">
-                        <i class="icon-picture"></i>
-                    </span>
+                    
                     <a href="blog-single.html">
                         <div class="inner">
                             <img src="{{ asset('/front/images/posts/trending-lg-1.jpg') }}"

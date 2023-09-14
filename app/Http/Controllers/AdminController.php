@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return view('admin.index');
@@ -21,9 +19,17 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function postStatus($id)
     {
-        //
+        $post = Post::find($id);
+        abort_if(!isset($post), 404);
+        if ($post->is_published === 0) {
+            $post->is_published =1;
+        }else{
+            $post->is_published = 0;
+        }
+        $post->save();
+        return Redirect::route('posts.index');
     }
 
     /**

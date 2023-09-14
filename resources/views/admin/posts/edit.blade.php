@@ -28,7 +28,7 @@
                         <div class="mb-3">
                             <label for="content" class="form-label">Content</label>
                             <textarea name="content" class="form-control mt-5 @error('content') is-invalid @enderror" rows="10"
-                                id="editor"">{{ $post->content }}</textarea>
+                                id="editor">{{ $post->content }}</textarea>
                             @error('content')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror

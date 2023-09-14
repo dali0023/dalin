@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-    <title>Katen - Minimal Blog & Magazine HTML Theme</title>
-    <meta name="description" content="Katen - Minimal Blog & Magazine HTML Theme">
+    <title>Dalin - @yield('title')</title>
+    <meta name="description" content="Dalin - @yield('title')">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/front/images/favicon.png') }}">
 
     <!-- STYLES -->
@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="{{ asset('/front/css/slick.css') }}" type="text/css" media="all">
     <link rel="stylesheet" href="{{ asset('/front/css/simple-line-icons.css') }}" type="text/css" media="all">
     <link rel="stylesheet" href="{{ asset('/front/css/style.css') }}" type="text/css" media="all">
-
 </head>
 
 <body class="font-sans antialiased">
@@ -28,20 +27,16 @@
 
         <!-- header -->
         @include('layouts.front-includes-files.header')
-        @yield('category_header')
-        {{-- {{ $category_header }} --}}
+        @yield('page_header')
         <!-- section main content -->
         <section class="main-content">
             <div class="container-xl">
                 <div class="row gy-4">
                     {{ $slot }}
                 </div>
-                
+
             </div>
         </section>
-
-        <!-- instagram feed -->
-        {{-- @include('layouts.front-includes-files.instagram_feed') --}}
 
         <!-- footer -->
         @include('layouts.front-includes-files.footer')
@@ -76,7 +71,7 @@
     <script src="{{ asset('/front/js/slick.min.js') }}"></script>
     <script src="{{ asset('/front/js/jquery.sticky-sidebar.min.js') }}"></script>
     <script src="{{ asset('/front/js/custom.js') }}"></script>
-
+    @yield('script')
 </body>
 
 </html>
