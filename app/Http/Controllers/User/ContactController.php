@@ -19,6 +19,7 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
+
         return redirect()->to('/');
         // Form validation
         // $this->validate($request, [
