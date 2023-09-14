@@ -198,7 +198,7 @@
 
         <!-- section header -->
         <div class="section-header">
-            <h3 class="section-title">Leave Comment</h3>
+            <h3 class="section-title">Leave your Comment</h3>
             <img src="{{ asset('/front/images/wave.svg') }}" class="wave" alt="wave" />
         </div>
 
